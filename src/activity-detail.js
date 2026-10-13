@@ -1,0 +1,25 @@
+window.ArchiveDetail = (() => {
+  let renderToken=0;
+  async function show(item,imperial){
+    const U=window.ArchiveUtils,{esc,num,duration,distance,elevation,speed,fileUrl}=U;
+    const dialog=document.getElementById('activity-detail'),body=document.getElementById('detail-body');
+    const token=++renderToken;
+    document.getElementById('detail-title').textContent=item.name;
+    document.getElementById('detail-date').textContent=`${item.localDate} · ${item.localTime} ${item.localZone} · ${item.type}`;
+    const distanceUnit=imperial?'mi':'km',elevationUnit=imperial?'ft':'m',speedUnit=imperial?'mph':'km/h';
+    const actions=`<div class="detail-actions">${item.file?`<a class="button" href="${fileUrl(item.file)}" download>Download ${esc(item.format)}</a>`:'<span class="missing">No activity file in the source archive</span>'}${item.originalFile&&item.originalFile!==item.file?`<a class="button" href="${fileUrl(item.originalFile)}" download>Archived compressed file</a>`:''}<a class="button" href="https://www.strava.com/activities/${encodeURIComponent(item.id)}" target="_blank" rel="noopener noreferrer">View on Strava ↗</a><button class="button" id="print-activity">Print activity</button></div>`+(item.format==='FIT'?'<p class="small muted">For FIT Preview, select this readable .fit file in Finder and press the space bar.</p>':'');
+    const metrics=[['Distance',`${distance(item.distance,imperial)} ${distanceUnit}`],['Moving time',duration(item.moving)],['Elapsed time',duration(item.elapsed)],['Elevation gain',`${elevation(item.elevation,imperial)} ${elevationUnit}`],['Average speed',`${speed(item.speed,imperial)} ${speedUnit}`,item.speedDerived?'Calculated: distance ÷ moving time':'Recorded in the CSV'],['Maximum speed',`${speed(item.maxSpeed,imperial)} ${speedUnit}`],['Average heart rate',`${num(item.heartRate,0)} bpm`],['Maximum heart rate',`${num(item.maxHeartRate,0)} bpm`],['Average power',`${num(item.power,0)} W`],['Average cadence',`${num(item.cadence,0)} rpm`],['Calories',num(item.calories,0)],['Gear',item.gear||'Not recorded']];
+    const raw=Object.entries(item.source).filter(([,value])=>value!=='').map(([key,value])=>`<tr><td>${esc(key)}</td><td>${esc(value)}</td></tr>`).join('');
+    body.innerHTML=actions+`<div class="detail-grid">${metrics.map(([label,value,note])=>`<div class="detail-metric"><span class="label">${label}</span><strong>${esc(value)}</strong>${note?`<small>${note}</small>`:''}</div>`).join('')}</div>`+
+      `<section class="route-panel"><div class="route-heading"><h3>Recorded route</h3><div class="route-legend"><span><b style="color:#198148">●</b> Start</span><span><b style="color:#d64400">●</b> Finish</span></div></div><div id="route-content">${item.preview?'Loading the local route preview…':item.previewError?'The activity file is available; its route preview could not be parsed.':'No route preview is available for this record.'}</div><p class="route-caption" id="route-caption"></p></section>`+
+      (item.description?`<h3>Description</h3><p class="activity-copy">${esc(item.description)}</p>`:'')+(item.note?`<h3>Private note</h3><p class="activity-copy">${esc(item.note)}</p>`:'')+
+      `<p class="small muted">Activity ID ${esc(item.id)} · Source timestamp ${esc(item.utc)} · ${item.commute?'Marked as a commute':'Commute flag: false'}</p>`+
+      `<details class="raw-fields"><summary>All non-empty fields from the source CSV (${Object.values(item.source).filter(v=>v!=='').length})</summary><p class="small muted">Source values retain their original units. Numbered labels preserve repeated CSV column names.</p><div class="table-wrap"><table><tbody>${raw}</tbody></table></div></details>`+
+      (item.file?`<details class="raw-fields"><summary>Source file and verification</summary><p class="small">Archive path: ${esc(item.originalFile)}<br>Readable copy: ${esc(item.file)}<br>SHA-256 of the archived bytes: <code style="overflow-wrap:anywhere">${esc(item.sourceSha256)}</code><br>SHA-256 of the readable file: <code style="overflow-wrap:anywhere">${esc(item.fileSha256)}</code></p></details>`:'');
+    document.getElementById('print-activity').addEventListener('click',()=>window.print());
+    if(!dialog.open)dialog.showModal();body.scrollTop=0;dialog.scrollTop=0;
+    if(item.preview){try{const route=await window.ArchiveRoute.load(item);if(token!==renderToken)return;document.getElementById('route-content').innerHTML=window.ArchiveRoute.draw(route,imperial);document.getElementById('route-caption').textContent=`${item.pointCount.toLocaleString()} recorded GPS points; ${item.previewPointCount.toLocaleString()} original points selected for this preview. North is at the top. The complete route fits inside the view. The file contains the full recording. No map tiles are requested.`;}catch(error){if(token===renderToken)document.getElementById('route-content').textContent=error.message;}}
+    else if(item.previewError)document.getElementById('route-caption').textContent=item.previewError;
+  }
+  return {show};
+})();

@@ -1,0 +1,6 @@
+{
+  "archive": "data/Strava-Activity-Archive-2026-10-12.zip",
+  "catalog": "data/catalog",
+  "timezone": "America/Los_Angeles",
+  "fitPreviewRepository": "../nfl-fit-file-preview"
+}

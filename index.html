@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>Strava activity archive</title>
+  <link rel="stylesheet" href="src/catalog.css">
+  <script defer src="data/catalog/archive-data.js"></script>
+  <script defer src="src/archive-utils.js"></script>
+  <script defer src="src/charts.js"></script>
+  <script defer src="src/route-view.js"></script>
+  <script defer src="src/activity-detail.js"></script>
+  <script defer src="src/catalog.js"></script>
+</head>
+<body>
+  <header class="page-header">
+    <div><p class="eyebrow">STRAVA ARCHIVE</p><h1>Activity catalog</h1><p id="coverage" class="muted">Loading your activity index…</p></div>
+    <div class="header-actions"><div class="unit-switch" role="group" aria-label="Display units"><button id="metric" aria-pressed="true">km / m</button><button id="imperial" aria-pressed="false">mi / ft</button></div><a href="data/catalog/activities-index.csv" download class="button">Download full CSV</a></div>
+  </header>
+  <main>
+    <nav class="tabs" aria-label="Catalog views"><button data-view="activities" aria-pressed="true">Activities</button><button data-view="totals" aria-pressed="false">Yearly &amp; gear totals</button><button data-view="notes" aria-pressed="false">Archive notes</button></nav>
+    <section class="filters" aria-label="Filter activities">
+      <label class="search-label">Search activities<input type="search" id="search" placeholder="Name, description, gear, activity ID…"></label>
+      <label>Year<select id="year"><option value="">All years</option></select></label>
+      <label>Activity type<select id="type"><option value="">All types</option></select></label>
+      <label>Gear<select id="gear"><option value="">All gear</option></select></label>
+      <label>File<select id="format"><option value="">All files</option><option>GPX</option><option>FIT</option><option>TCX</option><option value="missing">No file</option></select></label>
+      <details class="date-filter"><summary>Date range</summary><div><label>From<input id="from" type="date"></label><label>Through<input id="through" type="date"></label></div></details>
+      <button id="clear" class="text-button">Clear filters</button>
+    </section>
+    <section id="stats" class="stats" aria-label="Filtered activity totals"></section>
+    <section id="activities-view">
+      <div class="charts"><section class="chart-card"><div class="section-heading"><h2>Activity by year</h2><select id="year-metric" aria-label="Yearly chart metric"><option value="distance">Distance</option><option value="count">Activity count</option><option value="moving">Moving hours</option></select></div><div id="year-chart"></div><p class="small muted">Select a year to filter the catalog.</p></section><section class="chart-card"><h2>Distance &amp; elevation</h2><div id="scatter-chart"></div><p class="small muted">Select a point to open the activity. Activities without elevation are omitted.</p></section></div>
+      <div class="section-heading results-heading"><div><h2>Activities</h2><p id="result-count" class="small muted" aria-live="polite"></p></div><button id="export-filtered" class="button">Export filtered CSV</button></div>
+      <div class="table-wrap"><table id="activity-table"><thead><tr><th><button data-sort="utc">Date <span>↓</span></button></th><th><button data-sort="name">Activity <span></span></button></th><th><button data-sort="gear">Gear <span></span></button></th><th class="numeric"><button data-sort="distance">Distance <span></span></button></th><th class="numeric"><button data-sort="moving">Moving time <span></span></button></th><th class="numeric"><button data-sort="elevation">Elevation <span></span></button></th><th class="numeric"><button data-sort="speed">Avg. speed <span></span></button></th><th>File</th></tr></thead><tbody id="activity-rows"></tbody></table></div>
+      <div class="pagination"><label>Per page <select id="page-size"><option>50</option><option>100</option><option>250</option></select></label><span id="page-info"></span><div><button id="previous" class="button">Previous</button><button id="next" class="button">Next</button></div></div>
+    </section>
+    <section id="totals-view" hidden><h2>Yearly totals</h2><p class="small muted">Totals follow the current filters. Moving time and elapsed time remain separate.</p><div id="year-totals" class="table-wrap"></div><h2>Gear totals</h2><div id="gear-totals" class="table-wrap"></div></section>
+    <section id="notes-view" hidden class="notes"><h2>About this archive</h2><div id="archive-notes"></div><h3>Files in this folder</h3><p><a href="data/catalog/source-activities.csv" download>Original Strava activity CSV</a> · <a href="data/catalog/activities-index.csv" download>Normalized activity CSV</a> · <a href="data/catalog/manifest.json" download>File manifest and checksums</a> · <a id="archive-zip" href="data/Strava-Activity-Archive-2026-10-12.zip" download>Original ZIP archive</a></p><h3>Calculation and coverage notes</h3><ul id="calculation-notes"></ul><h3>Activities without files</h3><div id="missing-files"></div><h3>Preview coverage</h3><div id="preview-coverage"></div></section>
+  </main>
+  <footer><span>Local archive · <span id="timezone-label"></span></span><span>Open any activity for its recorded fields and source file.</span></footer>
+  <dialog id="activity-detail" aria-labelledby="detail-title"><div class="dialog-header"><div><p id="detail-date" class="eyebrow"></p><h2 id="detail-title"></h2></div><button id="close-detail" aria-label="Close activity details">×</button></div><div id="detail-body"></div></dialog>
+  <noscript>This catalog requires JavaScript. You can also open activities-index.csv in a spreadsheet.</noscript>
+</body>
+</html>
