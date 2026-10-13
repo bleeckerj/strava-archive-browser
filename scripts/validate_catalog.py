@@ -1,5 +1,6 @@
 """Verify source preservation, generated metadata and original XML preview points."""
 from pathlib import Path
+from urllib.parse import urlsplit
 from settings import PROJECT, SOURCE, DESTINATION as ROOT
 from collections import Counter
 import csv, gzip, hashlib, io, json, math, re, time, zipfile
@@ -66,10 +67,10 @@ with zipfile.ZipFile(SOURCE) as archive:
             for position,point in zip(track['sourceIndices'],track['points']):assert points[position]==point[:4]
             xml_previews+=1
 scripts=re.findall(r'<script[^>]+src="([^"]+)"',(PROJECT/'index.html').read_text())
-assert all((PROJECT/path).is_file() for path in scripts)
+assert all((PROJECT/urlsplit(path).path).is_file() for path in scripts)
 assert (PROJECT/'src/catalog.css').is_file()
 links=re.findall(r'href="([^"]+)"',(PROJECT/'index.html').read_text())
-assert all((PROJECT/path).is_file() for path in links if not path.startswith(('#','https:','http:')))
+assert all((PROJECT/urlsplit(path).path).is_file() for path in links if not path.startswith(('#','https:','http:')))
 for a in activities:
     for key in ['file','originalFile','preview']:
         if a[key]: assert (PROJECT/'data/catalog'/a[key]).is_file()

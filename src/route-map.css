@@ -1,0 +1,44 @@
+.route-map {
+  height: 430px;
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: #fff;
+  font-family: inherit;
+}
+
+.route-map .leaflet-tile {
+  filter: grayscale(1);
+}
+
+.route-map .leaflet-control-attribution {
+  background: #fff;
+  color: var(--ink);
+  font-size: 10px;
+}
+
+.route-map .leaflet-control-zoom a {
+  color: var(--ink);
+  background: #fff;
+}
+
+.route-map-actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin: 12px 0 16px;
+}
+
+.larger-map { font-size: 12px; }
+.map-status { margin: 8px 0; }
+
+@media (max-width: 720px) {
+  .route-map { height: 340px; }
+  .route-panel { padding: 12px; }
+  .route-heading { align-items: flex-start; }
+  .route-legend { gap: 10px; }
+}
+
+@media print {
+  .route-map-actions, .route-map .leaflet-control-zoom { display: none; }
+}

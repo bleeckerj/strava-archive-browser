@@ -14,12 +14,13 @@ npm start
 
 Open <http://127.0.0.1:8765/>. The server listens on this computer only. Stop it with Control-C. You can also open `index.html` directly in a browser that supports local script loading. No Strava credentials are required.
 
-The table supports search, date, year, activity type, gear and file filters, sorting, pagination, and metric or imperial units. Select an activity name for its recorded route, elevation profile, measurements, description, private notes and original CSV fields. The full index and filtered selections can be saved as CSV.
+The table supports search, date, year, activity type, gear and file filters, sorting, pagination, and metric or imperial units. Select an activity name for its recorded route, elevation profile, measurements, description, private notes and original CSV fields. Rides with GPS previews include an interactive street map with road and place labels, zoom and pan controls, a scale, start and finish markers, and a Fit ride button. The full index and filtered selections can be saved as CSV.
 
 ## Files
 
 - `index.html` and `src/` contain the browser code and styles.
 - `scripts/` contains archive import, track decoding, local serving and verification logic.
+- `vendor/leaflet/` contains the pinned local map library, styles and license; `src/map-config.js` selects the map tile source.
 - `archive.config.json` selects the source ZIP, generated catalog, display timezone and FIT Preview repository.
 - `data/Strava-Activity-Archive-2026-10-12.zip` is the complete original export.
 - `data/catalog/activities/` contains exact archived recordings and lossless decompressed copies of `.gz` files.
@@ -52,6 +53,6 @@ Verification compares every activity's source fields and all 1,012 recording fil
 
 Source activity dates were verified as UTC against the exported track timestamps. Local display uses America/Los_Angeles with PST or PDT. Distance uses the second source Distance column in metres; the first column contains kilometres. Missing average speed is calculated from distance divided by moving time and marked in activity details. Other absent measurements stay empty.
 
-Previews retain original GPS points, source indices, timestamps, segment boundaries and coordinate extrema. They sample the recording for display; full-resolution activity files remain available. Routes are drawn north-up without downloading map imagery. Select a readable `.fit` file in Finder and press Space to use the installed FIT Preview viewer.
+Previews retain original GPS points, source indices, timestamps, segment boundaries and coordinate extrema. They sample the recording for display; full-resolution activity files remain available. Routes are drawn north-up over OpenStreetMap street imagery. Map tiles load from `tile.openstreetmap.org` only for the viewed map and require an internet connection; recorded coordinates and activity data stay in the local project. The browser honors normal tile caching and shows attribution on the map. In offline use, the route and elevation remain visible while roads and place labels may be unavailable. Select a readable `.fit` file in Finder and press Space to use the installed FIT Preview viewer.
 
 This project covers the supplied export and does not synchronize the current Strava account.

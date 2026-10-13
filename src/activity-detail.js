@@ -1,9 +1,15 @@
 window.ArchiveDetail = (() => {
-  let renderToken=0;
+  let renderToken=0,mapView=null;
+  const disposeMap=()=>{mapView?.destroy();mapView=null;};
+  document.getElementById('activity-detail').addEventListener('close',()=>{
+    if(document.getElementById('activity-detail').open)return;
+    renderToken++;disposeMap();
+  });
   async function show(item,imperial){
     const U=window.ArchiveUtils,{esc,num,duration,distance,elevation,speed,fileUrl}=U;
     const dialog=document.getElementById('activity-detail'),body=document.getElementById('detail-body');
     const token=++renderToken;
+    disposeMap();
     document.getElementById('detail-title').textContent=item.name;
     document.getElementById('detail-date').textContent=`${item.localDate} · ${item.localTime} ${item.localZone} · ${item.type}`;
     const distanceUnit=imperial?'mi':'km',elevationUnit=imperial?'ft':'m',speedUnit=imperial?'mph':'km/h';
@@ -18,7 +24,7 @@ window.ArchiveDetail = (() => {
       (item.file?`<details class="raw-fields"><summary>Source file and verification</summary><p class="small">Archive path: ${esc(item.originalFile)}<br>Readable copy: ${esc(item.file)}<br>SHA-256 of the archived bytes: <code style="overflow-wrap:anywhere">${esc(item.sourceSha256)}</code><br>SHA-256 of the readable file: <code style="overflow-wrap:anywhere">${esc(item.fileSha256)}</code></p></details>`:'');
     document.getElementById('print-activity').addEventListener('click',()=>window.print());
     if(!dialog.open)dialog.showModal();body.scrollTop=0;dialog.scrollTop=0;
-    if(item.preview){try{const route=await window.ArchiveRoute.load(item);if(token!==renderToken)return;document.getElementById('route-content').innerHTML=window.ArchiveRoute.draw(route,imperial);document.getElementById('route-caption').textContent=`${item.pointCount.toLocaleString()} recorded GPS points; ${item.previewPointCount.toLocaleString()} original points selected for this preview. North is at the top. The complete route fits inside the view. The file contains the full recording. No map tiles are requested.`;}catch(error){if(token===renderToken)document.getElementById('route-content').textContent=error.message;}}
+    if(item.preview){try{const route=await window.ArchiveRoute.load(item);if(token!==renderToken||!dialog.open)return;mapView=window.ArchiveMap.show(document.getElementById('route-content'),route,imperial);document.getElementById('route-caption').textContent=`${item.pointCount.toLocaleString()} recorded GPS points; ${item.previewPointCount.toLocaleString()} original points selected for this preview. North is at the top. The map initially fits the complete ride. Roads and place names need an internet connection. The file contains the full recording.`;}catch(error){if(token===renderToken)document.getElementById('route-content').textContent=error.message;}}
     else if(item.previewError)document.getElementById('route-caption').textContent=item.previewError;
   }
   return {show};
