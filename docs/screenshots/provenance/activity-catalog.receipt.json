@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "provider": "codex-in-app-browser",
+  "model": "unavailable",
+  "created_at": "2026-10-15T06:24:52.904568+00:00",
+  "request": {
+    "prompt": "Capture the running Strava archive browser at its normal viewport with all filters clear, showing archive totals and activity charts. Preserve the displayed interface without alteration.",
+    "capture_method": "tab.screenshot",
+    "full_page": false,
+    "output_format": "jpeg"
+  },
+  "source_files": [
+    {
+      "filename": "Strava-Activity-Archive-2026-10-12.zip",
+      "sha256": "fa1558d5cb77303ad5235a96ab8150f5b700458d4152ac49bdbead68951efc1c"
+    }
+  ],
+  "outputs": [
+    {
+      "bytes": 72248,
+      "sha256": "d65d8568b22e3cfd05cd6377cbf0b603c807a5fbccd8b7fa8a54597edbd810d2",
+      "dimensions": [
+        1280,
+        720
+      ]
+    }
+  ]
+}

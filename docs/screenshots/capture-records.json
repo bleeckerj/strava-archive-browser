@@ -1,0 +1,134 @@
+{
+  "schemaVersion": 1,
+  "purpose": "Internal documentation capture and retention records.",
+  "captureMethod": "Unaltered screenshots of the running application using the author's existing Strava archive.",
+  "provenanceRetention": {
+    "status": "incomplete",
+    "failedStages": [
+      "upload_provenance_confirmation",
+      "provenance_list",
+      "provenance_attach",
+      "provenance_get"
+    ],
+    "httpStatus": 404,
+    "retry": "Use photarium_provenance_attach with each existing imageId and its receiptPath. Verify the association with photarium_provenance_list and exact receipt JSON with photarium_provenance_get. Do not upload duplicate images."
+  },
+  "captures": [
+    {
+      "file": "activity-catalog.jpg",
+      "sha256": "d65d8568b22e3cfd05cd6377cbf0b603c807a5fbccd8b7fa8a54597edbd810d2",
+      "bytes": 72248,
+      "dimensions": [
+        1280,
+        720
+      ],
+      "aspectRatio": "16:9",
+      "description": "The activity catalog with filters, totals, and charts.",
+      "altText": "The Strava activity catalog showing search and filters, archive totals, and yearly and distance/elevation charts.",
+      "prompt": "Capture the running Strava archive browser at its normal viewport with all filters clear, showing archive totals and activity charts. Preserve the displayed interface without alteration.",
+      "photarium": {
+        "imageId": "9dca0248-675b-4d47-debb-1c69c1cd3100",
+        "url": "https://imagedelivery.net/gaLGizR3kCgx5yRLtiRIOw/9dca0248-675b-4d47-debb-1c69c1cd3100/public",
+        "namespace": "cf-artifacts",
+        "parentId": null,
+        "uploadedAt": "2026-10-15T06:34:36.811Z",
+        "metadataReadbackVerified": true,
+        "promptSaved": true
+      },
+      "provenance": {
+        "receiptPath": "provenance/activity-catalog.receipt.json",
+        "receiptId": "55acbd8cee160e918bb07da15987ef9a94152350931f1cfa5e265ee31a4f40b6",
+        "retentionStatus": "incomplete",
+        "uploadProvenanceSaveConfirmed": false,
+        "reason": "The upload response omitted provenanceSave; Photarium provenance list, attach, and get endpoints returned HTTP 404."
+      }
+    },
+    {
+      "file": "fit-files-sorted-by-distance.jpg",
+      "sha256": "c14483f5dafa597d6c5d27e2347e32c3672c2c975e59266a794c83a337f67210",
+      "bytes": 104469,
+      "dimensions": [
+        1280,
+        1174
+      ],
+      "aspectRatio": "640:587",
+      "description": "Three FIT activities filtered to 2021 and sorted by distance.",
+      "altText": "The catalog filtered to 2021 and FIT, sorted by distance descending, with rides of 45.5, 19.9, and 19.6 kilometers.",
+      "prompt": "In the running Strava archive browser, select Year 2021 and File FIT, then sort Distance descending. Capture the full page with the three original activity rows, filters, charts, and download links.",
+      "photarium": {
+        "imageId": "c09d1b4c-4ba5-4656-9e0c-553d05940a00",
+        "url": "https://imagedelivery.net/gaLGizR3kCgx5yRLtiRIOw/c09d1b4c-4ba5-4656-9e0c-553d05940a00/public",
+        "namespace": "cf-artifacts",
+        "parentId": null,
+        "uploadedAt": "2026-10-15T06:35:11.532Z",
+        "metadataReadbackVerified": true,
+        "promptSaved": true
+      },
+      "provenance": {
+        "receiptPath": "provenance/fit-files-sorted-by-distance.receipt.json",
+        "receiptId": "3721378d6dca915a4845589fca30887541ea72dccff6cb2ffb320171012f88b7",
+        "retentionStatus": "incomplete",
+        "uploadProvenanceSaveConfirmed": false,
+        "reason": "The upload response omitted provenanceSave; Photarium provenance list, attach, and get endpoints returned HTTP 404."
+      }
+    },
+    {
+      "file": "download-fit.jpg",
+      "sha256": "201d9d32a5cf74bbc5bb7a8dac0c91e25cdfa72a782d2ef5fe7a325620524285",
+      "bytes": 92662,
+      "dimensions": [
+        1280,
+        720
+      ],
+      "aspectRatio": "16:9",
+      "description": "A recorded ride with its FIT download and measurements.",
+      "altText": "The ride details showing Download FIT and Archived compressed file beside the recorded date, distance, time, elevation, and other measurements.",
+      "prompt": "Open the recorded activity RideOmata @ 07.17.21 12:36, activity ID 5803607939, in the running Strava archive browser. Capture the normal viewport showing Download FIT, Archived compressed file, and the recorded measurements.",
+      "photarium": {
+        "imageId": "c146e28d-a2d7-43c5-6963-c411735a0f00",
+        "url": "https://imagedelivery.net/gaLGizR3kCgx5yRLtiRIOw/c146e28d-a2d7-43c5-6963-c411735a0f00/public",
+        "namespace": "cf-artifacts",
+        "parentId": null,
+        "uploadedAt": "2026-10-15T06:35:12.348Z",
+        "metadataReadbackVerified": true,
+        "promptSaved": true
+      },
+      "provenance": {
+        "receiptPath": "provenance/download-fit.receipt.json",
+        "receiptId": "5e4209240d7b31adf5748bec1865af20c97105bfe6c53f59ae6d16e3aaa01ba1",
+        "retentionStatus": "incomplete",
+        "uploadProvenanceSaveConfirmed": false,
+        "reason": "The upload response omitted provenanceSave; Photarium provenance list, attach, and get endpoints returned HTTP 404."
+      }
+    },
+    {
+      "file": "recorded-route.jpg",
+      "sha256": "d5201c5b9fc7e623a8b95be709aa8a00920895827b0bbc0bf2114e8392639f05",
+      "bytes": 106025,
+      "dimensions": [
+        1280,
+        720
+      ],
+      "aspectRatio": "16:9",
+      "description": "A recorded ride map and elevation profile.",
+      "altText": "A recorded ride on an OpenStreetMap street map with start and finish markers, attribution, a Fit ride button, and an elevation profile.",
+      "prompt": "In the details for activity 5803607939 in the running Strava archive browser, scroll to show the complete recorded route map, start and finish markers, map attribution, Fit ride control, and elevation profile. Capture the unchanged normal viewport.",
+      "photarium": {
+        "imageId": "1f4570a7-c9a7-4763-ec20-2e5d5ca93d00",
+        "url": "https://imagedelivery.net/gaLGizR3kCgx5yRLtiRIOw/1f4570a7-c9a7-4763-ec20-2e5d5ca93d00/public",
+        "namespace": "cf-artifacts",
+        "parentId": null,
+        "uploadedAt": "2026-10-15T06:35:12.900Z",
+        "metadataReadbackVerified": true,
+        "promptSaved": true
+      },
+      "provenance": {
+        "receiptPath": "provenance/recorded-route.receipt.json",
+        "receiptId": "82331360d0743408344c975f01e75c4f17be08cdd7cc04ed04ca85ea7b21f8e3",
+        "retentionStatus": "incomplete",
+        "uploadProvenanceSaveConfirmed": false,
+        "reason": "The upload response omitted provenanceSave; Photarium provenance list, attach, and get endpoints returned HTTP 404."
+      }
+    }
+  ]
+}

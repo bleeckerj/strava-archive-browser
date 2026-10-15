@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "provider": "codex-in-app-browser",
+  "model": "unavailable",
+  "created_at": "2026-10-15T06:30:39.639848+00:00",
+  "request": {
+    "prompt": "In the details for activity 5803607939 in the running Strava archive browser, scroll to show the complete recorded route map, start and finish markers, map attribution, Fit ride control, and elevation profile. Capture the unchanged normal viewport.",
+    "capture_method": "tab.screenshot",
+    "full_page": false,
+    "output_format": "jpeg"
+  },
+  "source_files": [
+    {
+      "filename": "Strava-Activity-Archive-2026-10-12.zip",
+      "sha256": "fa1558d5cb77303ad5235a96ab8150f5b700458d4152ac49bdbead68951efc1c"
+    }
+  ],
+  "outputs": [
+    {
+      "bytes": 106025,
+      "sha256": "d5201c5b9fc7e623a8b95be709aa8a00920895827b0bbc0bf2114e8392639f05",
+      "dimensions": [
+        1280,
+        720
+      ]
+    }
+  ]
+}

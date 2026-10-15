@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "provider": "codex-in-app-browser",
+  "model": "unavailable",
+  "created_at": "2026-10-15T06:25:26.330607+00:00",
+  "request": {
+    "prompt": "In the running Strava archive browser, select Year 2021 and File FIT, then sort Distance descending. Capture the full page with the three original activity rows, filters, charts, and download links.",
+    "capture_method": "tab.screenshot",
+    "full_page": true,
+    "output_format": "jpeg"
+  },
+  "source_files": [
+    {
+      "filename": "Strava-Activity-Archive-2026-10-12.zip",
+      "sha256": "fa1558d5cb77303ad5235a96ab8150f5b700458d4152ac49bdbead68951efc1c"
+    }
+  ],
+  "outputs": [
+    {
+      "bytes": 104469,
+      "sha256": "c14483f5dafa597d6c5d27e2347e32c3672c2c975e59266a794c83a337f67210",
+      "dimensions": [
+        1280,
+        1174
+      ]
+    }
+  ]
+}
