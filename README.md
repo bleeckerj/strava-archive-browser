@@ -59,7 +59,26 @@ Start the browser:
 npm start
 ```
 
-Open [http://127.0.0.1:8765/](http://127.0.0.1:8765/). Keep the terminal open while browsing; stop the server with **Control-C**. The server listens only on your computer. No Strava login or API credentials are required by this app.
+Open [http://127.0.0.1:8765/](http://127.0.0.1:8765/). The startup banner shows the actual URL, port, PID, project folder, runtime record, and stop command. Keep the terminal open while browsing; stop the server with **Control-C**. The server listens only on your computer. No Strava login or API credentials are required by this app.
+
+From another terminal in this project, inspect or stop its running servers:
+
+```sh
+npm run status
+npm stop
+```
+
+`status` lists every server for this checkout, including servers on custom ports and older instances without a runtime record. Each entry includes its URL, PID, command, working folder, start time, and age. `stop` sends a termination signal only after verifying the process is running this checkout's `scripts/serve.py`; other programs are left running. These inspection and stop commands require `lsof` and `ps`, which are included with macOS. On Linux, install `lsof` and the package providing `ps` if needed.
+
+To use a different port or target just one instance:
+
+```sh
+npm start -- --port 8766
+npm run status -- --port 8766
+npm stop -- --port 8766
+```
+
+The same commands work directly as `python3 scripts/serve.py`, `python3 scripts/serve.py status`, and `python3 scripts/serve.py stop`, with an optional `--port`. New instances save their PID, actual port, URL, command, project folder, and timestamp under `.runtime/servers/`; normal shutdown removes the record. This folder is excluded from Git and blocked by the HTTP server. Inspection uses live processes, so a leftover record after a crash cannot authorize stopping a reused PID. A port conflict reports the current listener and exits without a traceback.
 
 If a catalog already exists on your computer, you can go straight to `npm start`. After changing the ZIP or timezone in `archive.config.json`, run the build and verification commands again, then reload the page. A successful rebuild replaces the previous catalog, so keep each original ZIP you want to retain.
 
@@ -124,7 +143,7 @@ A GPX recording with GPS data can follow the same workflow. TCX is not an accept
 | `Archive not found` | Check the filename in `archive.config.json` and place the original ZIP directly under `data/`. |
 | An import error mentioning `activities.csv` | Use the account archive with `activities.csv` at the ZIP root and its referenced recordings under `activities/`. A ZIP containing another enclosing folder needs its structure corrected first. |
 | An empty or broken page on a fresh checkout | Run `npm ci`, `npm run build`, and `npm run verify`, then open the local server URL. The Git checkout contains no personal catalog. |
-| `Address already in use` | Use the server already running at port 8765, or run `npm start -- --port 8766` and open `http://127.0.0.1:8766/`. |
+| A port is already in use | Read the reported PID, command, and folder. Run `npm run status` to find this checkout's servers, then `npm stop` to stop them, or `npm stop -- --port 8765` to target one port. Use `npm start -- --port 8766` for a different port. |
 | Too few activities or no matches | Select **Clear filters** and check the date range covered by the archive. Strava activity history added after the export needs a newer archive. |
 | Roads or place names do not load | Map tiles need internet access. Local activity data, recorded route geometry, and elevation previews remain available. |
 | No route preview | Inspect **Archive notes → Preview coverage**. Some recordings have no GPS data, and some older FIT files need the optional Mac decoder. The original file can still be downloaded. |

@@ -1,6 +1,7 @@
 data/
 node_modules/
 .build/
+.runtime/
 __pycache__/
 *.pyc
 .env*

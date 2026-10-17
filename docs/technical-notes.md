@@ -8,6 +8,7 @@ The [README](../README.md) covers requesting a Strava archive, importing it, bro
 | --- | --- |
 | `index.html`, `src/` | Browser code and styles. |
 | `scripts/` | Archive import, track decoding, local serving, and verification. |
+| `.runtime/servers/` | Private records for running local servers; excluded from Git and HTTP access. |
 | `vendor/leaflet/` | Pinned map library, styles, and license. `src/map-config.js` selects the tile source. |
 | `archive.config.json` | Source ZIP, catalog destination, display timezone, and optional FIT Preview repository. |
 | `data/*.zip` | Original account archives supplied by the person using the browser. |
@@ -56,7 +57,7 @@ npm test
 
 Verification compares each activity's source fields with `activities.csv`, checks archived and decompressed bytes and SHA-256 hashes against the ZIP, and compares GPX/TCX preview coordinates, timestamps, and elevations with their original XML records. It also checks preview indices, normalized CSV rows, and local asset and recording paths. FIT preview checks validate their stored structure and indices; they do not independently decode every FIT point a second time.
 
-The Node tests cover download paths, units, escaping, route rendering, and map lifecycle. Tests that use the local catalog are skipped when no catalog has been built. They use Node test harnesses rather than launching a browser.
+The Node tests cover download paths, units, escaping, route rendering, and map lifecycle. Tests that use the local catalog are skipped when no catalog has been built. The Python tests start temporary local servers and verify process identification, port conflict diagnostics, ownership checks, interrupt and termination cleanup, private-path blocking, and port reuse. They require `lsof` and `ps`. All tests run through `npm test` without launching a browser.
 
 The documentation example archive contains 1,014 activities from January 5, 2010, through August 16, 2021: 390 GPX, 399 FIT, and 223 TCX recordings. Two rows have no source file. With the optional native fallback, it has 1,009 route previews; three recordings contain no usable GPS track. Four older FIT recordings use the fallback. These counts describe the author's local archive, which is excluded from the Git checkout.
 

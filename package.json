@@ -5,10 +5,12 @@
   "description": "Browse and verify a local Strava activity archive.",
   "scripts": {
     "start": "python3 scripts/serve.py",
+    "status": "python3 scripts/serve.py status",
+    "stop": "python3 scripts/serve.py stop",
     "build": "python3 scripts/catalog_builder.py",
     "build:fit": "python3 scripts/build_native_fit.py",
     "verify": "python3 scripts/validate_catalog.py",
-    "test": "node --test tests/browser.test.cjs"
+    "test": "node --test tests/browser.test.cjs && python3 -m unittest discover -s tests -p 'test_*.py'"
   },
   "dependencies": {
     "fit-file-parser": "1.21.0",
